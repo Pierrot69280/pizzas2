@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Une Pizza</h1>
+
+    <h4>Name : {{ pizza.name }}</h4>
+    <h4>Price : {{ pizza.price }} €</h4>
+
+    <div class="border border-dark">
+        <a class="btn btn-danger" href="{{ path('app_delete', {id:pizza.id} ) }}">delete</a>
+        <a class="btn btn-warning" href="{{ path('app_edit', {id:pizza.id} ) }}">edit</a>
+
+        <a class="btn btn-secondary" href="{{ path("app_pizzas") }}">retour</a>
+    </div>
+
+    <div>
+        {% for comment in pizza.comments %}
+            <hr>
+            <p>{{ comment.content }}</p>
+
+            <a class="btn btn-danger" href="{{ path('app_comment_delete', {id:comment.id} ) }}">delete</a>
+            <a class="btn btn-warning" href="{{ path('app_comment_edit', {id:comment.id} ) }}">edit</a>
+            <hr>
+        {% endfor %}
+    </div>
+
+    <div class="">
+        {{ form_start (form, {attr: {action:path("app_comment_create", {id:pizza.id})}})}}
+        {{ form_widget(form.content) }}
+        <button type="submit" class="btn btn-success">comment</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
